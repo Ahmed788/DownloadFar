@@ -19,5 +19,10 @@
   "ogTitle": "DownloadFar Mini App",
   "ogDescription": "Find and download media from Farcaster. Collaborate and share easily.",
   "ogImageUrl": "/public/icon.png",
-  "castShareUrl": "not set"
+  "castShareUrl": "not set",
+  "accountAssociation": {
+    "header": "eyJmaWQiOjExMTA5NzksInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHg4NTcyQmEzMDE1RWY5MmIwRDYzRjllRjE4RjRFNmEwMjM1YjIyNjg4In0",
+    "payload": "eyJkb21haW4iOiJkb3dubG9hZGZhci5vbnJlbmRlci5jb20ifQ",
+    "signature": "xZT1K++v6fuEgpemTsFrUujGA8uQ6vIef1F5ukOHa6AVP25WTbF8OZ00QRu0o3sTHsFpr08PTVknavV2cMoMfxw="
+  }
 }
