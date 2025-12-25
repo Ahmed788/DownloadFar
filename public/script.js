@@ -40,6 +40,11 @@ const mediaListEl = document.getElementById('media-list');
 let hasNeynarKey = false;
 
 import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
+
+// Call sdk.actions.ready() to notify Farcaster Mini App host that the app is ready
+if (typeof sdk !== 'undefined' && sdk.actions && typeof sdk.actions.ready === 'function') {
+  sdk.actions.ready();
+}
 let sessionToken;
 // Optional runtime config: set `window._walletConfig = { address: '0x...', secret: 'wc_secret_...' }`
 const WALLET_CONFIG = typeof window !== 'undefined' && window._walletConfig ? window._walletConfig : {};
