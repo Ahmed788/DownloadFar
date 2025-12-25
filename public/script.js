@@ -17,7 +17,14 @@ const WALLET_CONFIG = typeof window !== 'undefined' && window._walletConfig ? wi
 
 async function getSessionToken() {
   try {
-    const { token } = await sdk.quickAuth.getToken();
+    if (!sdk || !sdk.quickAuth || typeof sdk.quickAuth.getToken !== 'function') {
+      throw new Error('quickAuth unavailable');
+    }
+    const maybe = await Promise.resolve(sdk.quickAuth.getToken()).catch(err => {
+      console.error('quickAuth internal promise rejected', err);
+      return undefined;
+    });
+    const token = maybe?.token ?? maybe?.result?.token ?? undefined;
     sessionToken = token;
     hideSplash();
     // Attempt wallet auto-linking if configured
