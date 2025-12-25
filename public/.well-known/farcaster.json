@@ -19,6 +19,9 @@
   "ogTitle": "DownloadFar Mini App",
   "ogDescription": "Download images and videos directly from Farcaster.",
   "ogImageUrl": "https://downloadfar.onrender.com/public/icon.png",
+  "castShareUrl": "https://warpcast.com/~/compose?text=Check+out+DownloadFar",
+  "heroImageUrl": "https://downloadfar.onrender.com/public/hero.png",
+
   "accountAssociation": {
     "header": "eyJmaWQiOjExMTA5NzksInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHg4NTcyQmEzMDE1RWY5MmIwRDYzRjllRjE4RjRFNmEwMjM1YjIyNjg4In0",
     "payload": "eyJkb21haW4iOiJkb3dubG9hZGZhci5vbnJlbmRlci5jb20ifQ",
