@@ -2,7 +2,7 @@
   "version": 1,
   "name": "DownloadFar",
   "iconUrl": "/public/icon.png",
-  "homeUrl": "http://localhost:3000/", 
+  "homeUrl": "downloadfar.onrender.com", 
   "imageUrl": "/public/icon.png",
   "buttonTitle": "Open DownloadFar",
   "splashImageUrl": "/public/splash.png",
