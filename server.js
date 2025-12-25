@@ -393,13 +393,26 @@ app.post('/api/wallet/link', quickAuthMiddleware, (req, res) => {
 app.post('/api/cast-media', async (req, res) => {
   try {
     const { hash } = req.body || {};
-    if (!hash) return res.status(400).json({ error: 'missing cast hash' });
+    if (!hash) return res.status(400).json({ error: 'missing input' });
+    // إذا كان رابط عادي (صورة/فيديو/يوتيوب)
+    if (/^https?:\/\//i.test(hash)) {
+      const url = hash;
+      const type = detectTypeFromUrl(url);
+      let source = 'url';
+      // يوتيوب
+      if (/youtube\.com|youtu\.be/.test(url)) {
+        source = 'youtube';
+      }
+      // أرجع كائن واحد فقط
+      return res.json({ media: [{ url, type, source }] });
+    }
+    // إذا كان هاش كاست، استخدم المنطق القديم
     const media = await listCastMedia(hash);
     if (!media.length) return res.status(404).json({ error: 'no media found in cast' });
     res.json({ media });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ error: err.message || 'failed to resolve cast media' });
+    res.status(500).json({ error: err.message || 'failed to resolve media' });
   }
 });
 

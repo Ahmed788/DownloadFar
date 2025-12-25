@@ -8,6 +8,7 @@
         "dev": "node server.js"
     },
     "dependencies": {
+        "@farcaster/miniapp-sdk": "^0.2.1",
         "@farcaster/quick-auth": "^0.0.8",
         "@neynar/nodejs-sdk": "^3.114.0",
         "@neynar/react": "^1.2.22",

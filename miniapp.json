@@ -1,0 +1,10 @@
+{
+  "name": "DownloadFar",
+  "description": "Download media from Farcaster casts and URLs.",
+  "icon": "https://raw.githubusercontent.com/yourrepo/youricon.png",
+  "url": "https://yourdomain.com/", 
+  "author": "Your Name",
+  "version": "1.0.0",
+  "permissions": ["cast:read", "user:read"],
+  "entry": "/public/index.html"
+}
