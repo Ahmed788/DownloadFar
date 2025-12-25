@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mini Downloader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="splash" class="splash" aria-hidden="true">
+    <div class="splash__inner">
+      <div class="splash__icon">
+        <span class="arrow"></span>
+        <span class="base"></span>
+      </div>
+      <div class="splash__brand">DownloadFar</div>
+      <div class="splash__hint">Initializing Mini App…</div>
+    </div>
+  </div>
+  <div class="bg-shapes" aria-hidden="true">
+    <span class="blob blob-a"></span>
+    <span class="blob blob-b"></span>
+    <span class="grid-dots"></span>
+  </div>
+
+  <div class="page">
+    <header class="top">
+      <div class="brand">Mini Downloader</div>
+      <div class="pill">Fast pull for casts, images, and video</div>
+    </header>
+
+    <main class="shell">
+      <section class="card">
+        <div class="card__body">
+          <div class="card__left">
+            <p class="eyebrow">Paste a URL or cast hash</p>
+            <h1>Fetch media without the fuss</h1>
+            <p class="lede">Drop in a Farcaster cast hash or any direct media link. Choose the type and quality, then let us package it for you.</p>
+
+            <form id="form" class="form">
+              <label class="field">
+                <span>URL or Cast Hash</span>
+                <input type="text" id="url" name="url" placeholder="https://... or cast hash" required />
+              </label>
+
+              <div class="field grid-2">
+                <label>
+                  <span>Type</span>
+                  <select id="type" name="type">
+                    <option value="image">Image</option>
+                    <option value="video">Video</option>
+                  </select>
+                </label>
+                <label>
+                  <span>Quality</span>
+                  <select id="quality" name="quality">
+                    <option value="high">High</option>
+                    <option value="medium">Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </label>
+              </div>
+
+              <div class="actions">
+                <button id="download-btn" type="submit" class="btn primary">Start download</button>
+                <button id="inspect-btn" type="button" class="btn ghost">Inspect cast media</button>
+                <button id="subscribe" type="button" class="btn ghost">Subscribe (dev)</button>
+              </div>
+
+              <div id="status" class="status" role="status" aria-live="polite">Ready when you are.</div>
+
+              <div id="media-panel" class="media-panel" hidden>
+                <div class="media-panel__head">
+                  <h4>Cast media found</h4>
+                  <p class="muted">Select which asset to download; we will fill the link and type for you.</p>
+                </div>
+                <div id="media-list" class="media-grid"></div>
+              </div>
+            </form>
+          </div>
+
+          <div class="card__right">
+            <div class="callout">
+              <p class="eyebrow">Why this tool</p>
+              <h3>Reliable pulls with one click</h3>
+              <ul class="bullets">
+                <li>Smart file naming from responses</li>
+                <li>Quality presets tuned for social sharing</li>
+                <li>Lightweight UI with clear states</li>
+              </ul>
+              <div class="hint">Need something else? Drop in any direct media URL and we will attempt to package it.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Dev auto-link config (do not use in production)
+    window._walletConfig = {
+      address: '0x8FE3C6A86840b09e36647A9bbE4B8b6041314523',
+      secret: 'wc_secret_28f52af6079f80d90ba4531ec1530031f190ce6d31bbc6b9f2dec390_147fff67'
+    };
+  </script>
+  <script type="module" src="/script.js"></script>
+  <link rel="preconnect" href="https://auth.farcaster.xyz" />
+</body>
+</html>
+
