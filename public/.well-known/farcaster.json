@@ -5,7 +5,7 @@
   "homeUrl": "https://downloadfar.onrender.com/",
   "imageUrl": "https://downloadfar.onrender.com/public/icon.png",
   "buttonTitle": "Download from Farcaster",
-  "splashImageUrl": "https://downloadfar.onrender.com/public/splash.png",
+  "splashImageUrl": "https://downloadfar.onrender.com/splash.png",
   "splashBackgroundColor": "#ffffff",
   "subtitle": "Download media easily from Farcaster.",
   "description": "Connect and download images and videos from Farcaster casts or any URL.",
