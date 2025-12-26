@@ -29,26 +29,6 @@ async function addUser(username, email, password) {
 
 // مثال للاستخدام
 // addUser('testuser', 'test@example.com', '123456');
-db.pragma('journal_mode = WAL');
-db.prepare(`CREATE TABLE IF NOT EXISTS users (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  username TEXT NOT NULL,
-  email TEXT NOT NULL,
-  password TEXT NOT NULL
-)`);
-db.prepare(`CREATE TABLE IF NOT EXISTS payment_intents (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
-  amount REAL,
-  status TEXT,
-  FOREIGN KEY(user_id) REFERENCES users(id)
-)`);
-db.prepare(`CREATE TABLE IF NOT EXISTS wallets (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
-  balance REAL DEFAULT 0,
-  FOREIGN KEY(user_id) REFERENCES users(id)
-)`);
 module.exports = {
   addUser,
   testConnection,
