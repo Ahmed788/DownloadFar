@@ -1,33 +1,4 @@
-﻿// زر التوقيع عبر Farcaster
-const signBtn = document.getElementById('sign-btn');
-
-async function handleSign() {
-  setStatus('progress', 'جاري طلب التوقيع من Farcaster...');
-  try {
-    // مثال: توقيع رسالة نصية
-    const message = 'أوافق على استخدام DownloadFar';
-    if (typeof sdk !== 'undefined' && sdk.signer) {
-      const result = await sdk.signer.requestSignature({
-        message,
-        type: 'text',
-      });
-      if (result && result.signature) {
-        setStatus('success', 'تم التوقيع بنجاح!');
-        console.log('Signature:', result.signature);
-      } else {
-        setStatus('warn', 'لم يتم التوقيع أو رفض المستخدم.');
-      }
-    } else {
-      setStatus('error', 'SDK غير متوفر أو لا يدعم التوقيع.');
-    }
-  } catch (err) {
-    setStatus('error', 'حدث خطأ أثناء طلب التوقيع.');
-    console.error(err);
-  }
-}
-
-if (signBtn) signBtn.addEventListener('click', handleSign);
-const form = document.getElementById('form');
+﻿const form = document.getElementById('form');
 const urlInput = document.getElementById('url');
 const typeSelect = document.getElementById('type');
 const qualitySelect = document.getElementById('quality');
@@ -40,21 +11,39 @@ const mediaListEl = document.getElementById('media-list');
 let hasNeynarKey = false;
 
 import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
-
-// Call sdk.actions.ready() to notify Farcaster Mini App host that the app is ready
-if (typeof sdk !== 'undefined' && sdk.actions && typeof sdk.actions.ready === 'function') {
-  sdk.actions.ready();
-}
 let sessionToken;
 // Optional runtime config: set `window._walletConfig = { address: '0x...', secret: 'wc_secret_...' }`
 const WALLET_CONFIG = typeof window !== 'undefined' && window._walletConfig ? window._walletConfig : {};
 
+function clearSession() {
+  sessionToken = undefined;
+  setStatus('warn', 'تم إلغاء الجلسة. يمكنك إعادة تسجيل الدخول لاحقاً.');
+}
+
+// زر لتسجيل الخروج (إلغاء الجلسة)
+window.addEventListener('DOMContentLoaded', () => {
+  const logoutBtn = document.getElementById('logout-btn');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', clearSession);
+  }
+});
+
+// Call sdk.actions.ready() if available, to signal Mini App readiness
+if (sdk && sdk.actions && typeof sdk.actions.ready === 'function') {
+  sdk.actions.ready();
+}
+
 async function getSessionToken() {
   try {
-      // Farcaster QuickAuth: جلب توكن المستخدم وربط fid
-      const { token, fid } = await sdk.quickAuth.getToken();
+    if (!sdk || !sdk.quickAuth || typeof sdk.quickAuth.getToken !== 'function') {
+      throw new Error('quickAuth unavailable');
+    }
+    const maybe = await Promise.resolve(sdk.quickAuth.getToken()).catch(err => {
+      console.error('quickAuth internal promise rejected', err);
+      return undefined;
+    });
+    const token = maybe?.token ?? maybe?.result?.token ?? undefined;
     sessionToken = token;
-      window._farcasterUser = { fid, token };
     hideSplash();
     // Attempt wallet auto-linking if configured
     linkWalletIfConfigured().catch(() => {});
@@ -198,6 +187,21 @@ function extractYouTubeId(u) {
   }
 }
 
+// Try to pull a Farcaster cast hash from a Warpcast URL
+function extractCastHashFromUrl(u) {
+  try {
+    const url = new URL(u);
+    const host = url.hostname.toLowerCase();
+    if (!host.includes('warpcast.com') && !host.includes('farcaster')) return undefined;
+    const parts = url.pathname.split('/').filter(Boolean);
+    // Common Warpcast permalink includes a segment starting with 0x...
+    const seg = parts.find(p => p.startsWith('0x') && p.length > 10);
+    return seg || undefined;
+  } catch {
+    return undefined;
+  }
+}
+
 function hideSplash() {
   const el = document.getElementById('splash');
   if (el) el.hidden = true;
@@ -218,16 +222,6 @@ window.addEventListener('DOMContentLoaded', () => {
       setStatus('warn', 'لم نحصل على توكن سريع — سنواصل بدون المصادقة.');
     }
   }, 3500);
-
-  // Mini App SDK: إضافة التطبيق تلقائياً لقائمة الميني آب عند دخول المستخدم
-  if (typeof sdk !== 'undefined' && sdk.miniApp) {
-    sdk.miniApp.registerApp({
-      name: 'DownloadFar',
-      url: window.location.origin,
-      icon: '/favicon.ico',
-      description: 'Download media from Farcaster casts and URLs.'
-    }).catch(() => {});
-  }
 });
 
 async function linkWalletIfConfigured() {
@@ -315,41 +309,53 @@ async function fetchStatus() {
 }
 
 async function inspectCast() {
-  const value = urlInput.value.trim();
-  if (!value) {
-    setStatus('warn', 'أدخل رابط أو هاش الكاست أولاً.');
+  const raw = urlInput.value.trim();
+  if (!raw) {
+    setStatus('warn', 'أدخل هاش الكاست أو رابط الكاست من Warpcast.');
     return;
   }
   if (!hasNeynarKey) {
     setStatus('warn', 'سنحاول الفحص حتى لو لم يتعرف الخادم على NEYNAR_API_KEY.');
   }
+  let hash = undefined;
+  let url = undefined;
+  if (isHttpUrl(raw)) {
+    url = raw;
+    const maybe = extractCastHashFromUrl(raw);
+    if (!maybe) {
+      setStatus('warn', 'الفحص متاح لهاش الكاست فقط. أدخل رابط الكاست من Warpcast أو الهاش 0x...');
+      return;
+    }
+    hash = maybe;
+  } else {
+    hash = raw;
+  }
   inspectBtn.disabled = true;
   inspectBtn.textContent = 'Inspecting...';
-  setStatus('progress', 'جاري جلب الوسائط أو المعاينة...');
+  setStatus('progress', 'Fetching media from cast...');
   try {
-    // أرسل دائماً إلى السيرفر، سواء كان هاش أو رابط
-    const res = await postJson('/api/cast-media', { hash: value });
+    const res = await postJson('/api/cast-media', url ? { hash, url } : { hash });
     if (!res.ok) {
-      const err = await res.json().catch(() => ({ error: 'فشل الفحص' }));
-      setStatus('error', err.error || 'فشل الفحص');
+      const err = await res.json().catch(() => ({ error: 'Failed to inspect cast' }));
+      setStatus('error', err.error || 'Failed to inspect cast');
       mediaPanel.hidden = true;
       return;
     }
     const data = await res.json();
     if (!data.media || !data.media.length) {
-      setStatus('warn', 'لا توجد وسائط أو معاينة متاحة لهذا الإدخال.');
+      setStatus('warn', 'لا توجد وسائط في هذا الكاست.');
       mediaPanel.hidden = true;
       return;
     }
     renderMediaList(data.media);
-    setStatus('success', 'تم جلب الوسائط أو المعاينة.');
+    setStatus('success', 'اختر الوسائط التي تريد تنزيلها.');
   } catch (err) {
     console.error(err);
     setStatus('error', 'تعذر الاتصال بالخادم.');
     mediaPanel.hidden = true;
   } finally {
     inspectBtn.disabled = false;
-    inspectBtn.textContent = 'Inspect media';
+    inspectBtn.textContent = 'Inspect cast media';
   }
 }
 
