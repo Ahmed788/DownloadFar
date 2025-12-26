@@ -23,8 +23,8 @@
   "heroImageUrl": "https://download-far.vercel.app/public/hero.png",
 
   "accountAssociation": {
-    "header": "eyJmaWQiOjExMTA5NzksInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHg4NTcyQmEzMDE1RWY5MmIwRDYzRjllRjE4RjRFNmEwMjM1YjIyNjg4In0",
+    "header": "eyJmaWQiOjExMTA5NzksInR5cGUiOiJhdXRoIiwia2V5IjoiMHhhNjYyRWQ0NGE3NzVCYzk5NjI3Q2VDMEEwNkRDMjI2RGQwNDQ3N2E4In0",
     "payload": "eyJkb21haW4iOiJkb3dubG9hZC1mYXIudmVyY2VsLmFwcCJ9",
-    "signature": "xZT1K++v6fuEgpemTsFrUujGA8uQ6vIef1F5ukOHa6AVP25WTbF8OZ00QRu0o3sTHsFpr08PTVknavV2cMoMfxw="
+    "signature": "nySVijR6CarR/BNChZOCK/rIwuyR8FmLQ+zQH+JGGMR5hojTYLA9zHUvyrwVAore1OhfyVeLiZIoDpJrFCQR8xs="
   }
 }
