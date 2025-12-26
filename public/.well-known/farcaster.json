@@ -1,16 +1,16 @@
 {
   "version": 1,
   "name": "DownloadFar",
-  "iconUrl": "https://downloadfar.onrender.com/public/icon.png",
-  "homeUrl": "https://downloadfar.onrender.com/",
-  "imageUrl": "https://downloadfar.onrender.com/public/icon.png",
+  "iconUrl": "https://download-far.vercel.app/public/icon.png",
+  "homeUrl": "https://download-far.vercel.app/",
+  "imageUrl": "https://download-far.vercel.app/public/icon.png",
   "buttonTitle": "Download from Farcaster",
-  "splashImageUrl": "https://downloadfar.onrender.com/splash.png",
+  "splashImageUrl": "https://download-far.vercel.app/splash.png",
   "splashBackgroundColor": "#ffffff",
   "subtitle": "Download media easily from Farcaster.",
   "description": "Connect and download images and videos from Farcaster casts or any URL.",
   "screenshotUrls": [
-    "https://downloadfar.onrender.com/public/screenshot1.png"
+    "https://download-far.vercel.app/public/screenshot1.png"
   ],
   "primaryCategory": "social",
   "tags": ["download", "farcaster", "media"],
@@ -18,13 +18,13 @@
   "tagline": "Share and download media from Farcaster.",
   "ogTitle": "DownloadFar Mini App",
   "ogDescription": "Download images and videos directly from Farcaster.",
-  "ogImageUrl": "https://downloadfar.onrender.com/public/icon.png",
+  "ogImageUrl": "https://download-far.vercel.app/public/icon.png",
   "castShareUrl": "https://warpcast.com/~/compose?text=Check+out+DownloadFar",
-  "heroImageUrl": "https://downloadfar.onrender.com/public/hero.png",
+  "heroImageUrl": "https://download-far.vercel.app/public/hero.png",
 
   "accountAssociation": {
     "header": "eyJmaWQiOjExMTA5NzksInR5cGUiOiJjdXN0b2R5Iiwia2V5IjoiMHg4NTcyQmEzMDE1RWY5MmIwRDYzRjllRjE4RjRFNmEwMjM1YjIyNjg4In0",
-    "payload": "eyJkb21haW4iOiJkb3dubG9hZGZhci5vbnJlbmRlci5jb20ifQ",
+    "payload": "eyJkb21haW4iOiJkb3dubG9hZC1mYXIudmVyY2VsLmFwcCJ9",
     "signature": "xZT1K++v6fuEgpemTsFrUujGA8uQ6vIef1F5ukOHa6AVP25WTbF8OZ00QRu0o3sTHsFpr08PTVknavV2cMoMfxw="
   }
 }
