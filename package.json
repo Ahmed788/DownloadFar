@@ -1,5 +1,5 @@
 {
-    "type": "module",
+
     "name": "farcaster-mini-downloader",
     "version": "0.1.0",
     "description": "Mini downloader app: images/videos with daily free image and subscription logic",
