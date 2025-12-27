@@ -1,6 +1,9 @@
 {
   "version": 1,
   "name": "DownloadFar",
+  "aspectRatio": "not set",
+  "url": "https://download-far.vercel.app/",
+  "type": "miniapp",
   "iconUrl": "https://download-far.vercel.app/public/icon.png",
   "homeUrl": "https://download-far.vercel.app/",
   "imageUrl": "https://download-far.vercel.app/public/icon.png",
