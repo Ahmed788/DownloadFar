@@ -6,9 +6,9 @@
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "dev": "node server.js"
+        "dev": "node server.js",
+        "build": "echo 'No build step required'"
     },
-    "build": "echo 'No build step required'",
     "dependencies": {
         "@farcaster/miniapp-sdk": "^0.2.1",
         "@farcaster/quick-auth": "^0.0.7",
