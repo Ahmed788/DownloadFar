@@ -1,13 +1,14 @@
 {
+    "type": "module",
     "name": "farcaster-mini-downloader",
     "version": "0.1.0",
     "description": "Mini downloader app: images/videos with daily free image and subscription logic",
     "main": "server.js",
     "scripts": {
         "start": "node server.js",
-        "dev": "node server.js",
-        "build": "echo 'No build step required'"
+        "dev": "node server.js"
     },
+    "build": "echo 'No build step required'",
     "dependencies": {
         "@farcaster/miniapp-sdk": "^0.2.1",
         "@farcaster/quick-auth": "^0.0.7",
@@ -18,8 +19,6 @@
         "dotenv": "^17.2.3",
         "express": "^4.19.2",
         "ffmpeg-static": "^5.2.4",
-        "fluent-ffmpeg": "^2.1.2",
-        "viem": "^2.43.3",
-        "ytdl-core": "^4.11.5"
+        "fluent-ffmpeg": "^2.1.2"
     }
 }
